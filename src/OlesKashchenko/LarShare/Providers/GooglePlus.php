@@ -27,8 +27,22 @@ class GooglePlus extends AbstractProvider
         return $url;
     } // end getUrl
 
-    public function getSharedCount()
+    public function getSharedCount($url = '')
     {
-        return;
+        if (!$url) {
+            $url = Request::url();
+        }
+
+        $link = 'https://plusone.google.com/_/+1/fastbutton?url='. urlencode($url);
+
+        $data = file_get_contents($link);
+        preg_match( '/window\.__SSR = {c: ([\d]+)/', $data, $matches);
+
+        $count = 0;
+        if (isset($matches[0])) {
+            $count = str_replace( 'window.__SSR = {c: ', '', $matches[0]);
+        }
+
+        return $count;
     } // end getSharedCount
 }

@@ -29,8 +29,22 @@ class Pinterest extends AbstractProvider
         return $url;
     } // end getUrl
 
-    public function getSharedCount()
+    public function getSharedCount($url = '')
     {
-        return;
+        if (!$url) {
+            $url = Request::url();
+        }
+
+        $link = 'http://api.pinterest.com/v1/urls/count.json?url='. urlencode($url);
+
+        $data = file_get_contents($link);
+
+        // fixme:
+        $count = 0;
+        if ($data) {
+            $count = substr($data, 13, -1);
+        }
+
+        return intval($count);
     } // end getSharedCount
 }

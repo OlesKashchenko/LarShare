@@ -46,8 +46,22 @@ class Twitter extends AbstractProvider
         return $url;
     } // end getUrl
 
-    public function getSharedCount()
+    public function getSharedCount($url = '')
     {
-        return;
+        if (!$url) {
+            $url = Request::url();
+        }
+
+        $link = 'http://urls.api.twitter.com/1/urls/count.json?url='. urlencode($url);
+
+        $data = file_get_contents($link);
+        $data = json_decode($data);
+
+        $count = 0;
+        if (isset($data->count)) {
+            $count = $data->count;
+        }
+
+        return intval($count);
     } // end getSharedCount
 }

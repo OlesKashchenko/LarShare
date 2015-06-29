@@ -42,8 +42,22 @@ class Vkontakte extends AbstractProvider
         return $url;
     } // end getUrl
 
-    public function getSharedCount()
+    public function getSharedCount($url = '')
     {
-        return;
+        if (!$url) {
+            $url = Request::url();
+        }
+
+        $link = 'https://vk.com/share.php?act=count&index=1&url='. urlencode($url);
+
+        $data = file_get_contents($link);
+        $data = preg_match('/^VK.Share.count\(\d+,\s+(\d+)\);$/i', $data, $matches);
+
+        $count = 0;
+        if (isset($matches[1])) {
+            $count = $matches[1];
+        }
+
+        return intval($count);
     } // end getSharedCount
 }

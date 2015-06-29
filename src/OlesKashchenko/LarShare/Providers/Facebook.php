@@ -86,8 +86,20 @@ class Facebook extends AbstractProvider
         return 'https://www.facebook.com/share.php?u=' . urlencode($this->getOption('href', Request::url()));
     } // end getSimpleShareUrl
 
-    public function getSharedCount()
+    public function getSharedCount($url = '')
     {
-        return;
+        if (!$url) {
+            $url = Request::url();
+        }
+
+        $link = 'https://api.facebook.com/method/links.getStats?format=json&urls='. urlencode($url);
+
+        $data = file_get_contents($link);
+        $data = json_decode($data);
+
+        // share_count
+        $count = (is_array($data) ? $data[0]->total_count : $data->total_count);
+
+        return intval($count);
     } // end getSharedCount
 }

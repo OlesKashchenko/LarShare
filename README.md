@@ -34,6 +34,8 @@ Currently supported networks: google+, facebook, twitter, vkontakte, pinterest.
 ```html
 <a href="{{ LarShare::gplus()->getUrl() }}" target="_blank">Google+</a>
 <a href="{{ LarShare::pinterest(['media' => asset('/img/pin.png'), 'description' => 'oh hai'])->getUrl() }}" target="_blank">Pin it!</a>
+
+<span>{{ LarShare::facebook()->getSharedCount() }}<span>
 ```
 
 Or go with js to open share dialog in new window:

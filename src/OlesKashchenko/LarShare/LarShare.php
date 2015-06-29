@@ -46,3 +46,4 @@ class LarShare
         return $entity;
     } // end vk
 }
+

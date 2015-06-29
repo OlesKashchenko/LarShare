@@ -40,4 +40,5 @@ abstract class AbstractProvider
     } // end getJs
 
     abstract public function getUrl();
+    abstract public function getSharedCount();
 }

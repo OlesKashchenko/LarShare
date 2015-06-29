@@ -41,4 +41,9 @@ class Vkontakte extends AbstractProvider
 
         return $url;
     } // end getUrl
+
+    public function getSharedCount()
+    {
+        return;
+    } // end getSharedCount
 }
